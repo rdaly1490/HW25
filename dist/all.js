@@ -32520,7 +32520,7 @@ module.exports = Backbone.Collection.extend({
 	model: CommentModel
 });
 
-},{"../models/CommentModel.js":168,"backbone":1,"jquery":4}],161:[function(require,module,exports){
+},{"../models/CommentModel.js":169,"backbone":1,"jquery":4}],161:[function(require,module,exports){
 "use strict";
 
 var $ = require("jquery");
@@ -32533,7 +32533,7 @@ module.exports = Backbone.Collection.extend({
 	model: BlogPostModel
 });
 
-},{"../models/BlogPostModel.js":167,"backbone":1,"jquery":4}],162:[function(require,module,exports){
+},{"../models/BlogPostModel.js":168,"backbone":1,"jquery":4}],162:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32639,7 +32639,7 @@ module.exports = React.createClass({
 
 });
 
-},{"../models/BlogPostModel":167,"react":159}],163:[function(require,module,exports){
+},{"../models/BlogPostModel":168,"react":159}],163:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32681,7 +32681,7 @@ module.exports = React.createClass({
 
 });
 
-},{"../models/CommentModel":168,"react":159}],164:[function(require,module,exports){
+},{"../models/CommentModel":169,"react":159}],164:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32709,7 +32709,64 @@ module.exports = React.createClass({
 
 });
 
-},{"../collections/CommentCollection":160,"../models/CommentModel":168,"react":159}],165:[function(require,module,exports){
+},{"../collections/CommentCollection":160,"../models/CommentModel":169,"react":159}],165:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var LoginModel = require("../models/LoginModel");
+
+module.exports = React.createClass({
+	displayName: "exports",
+
+	render: function render() {
+		return React.createElement(
+			"form",
+			{ onSubmit: this.loginSubmitted },
+			React.createElement(
+				"label",
+				null,
+				"Username"
+			),
+			React.createElement("input", { ref: "username", type: "text" }),
+			React.createElement(
+				"label",
+				null,
+				"Password"
+			),
+			React.createElement("input", { ref: "password", type: "text" }),
+			React.createElement(
+				"label",
+				null,
+				"Email"
+			),
+			React.createElement("input", { ref: "email", type: "text" }),
+			React.createElement(
+				"button",
+				{ type: "submit" },
+				"Submit Comment!"
+			)
+		);
+	},
+
+	loginSubmitted: function loginSubmitted(e) {
+		e.preventDefault();
+		var login = new LoginModel({
+			username: this.refs.username.getDOMNode().value,
+			password: this.refs.password.getDOMNode().value,
+			email: this.refs.email.getDOMNode().value
+		});
+
+		// console.log(login);
+
+		if (!login.isValid()) {
+			console.log(login.validationError);
+		} else {
+			console.log(login);
+		}
+	}
+});
+
+},{"../models/LoginModel":170,"react":159}],166:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32744,7 +32801,7 @@ module.exports = React.createClass({
 
 });
 
-},{"../collections/PostCollection":161,"../models/BlogPostModel":167,"react":159}],166:[function(require,module,exports){
+},{"../collections/PostCollection":161,"../models/BlogPostModel":168,"react":159}],167:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32756,17 +32813,19 @@ var BlogPostForm = require("./components/BlogPostForm");
 var PostList = require("./components/PostList");
 var PostCollection = require("./collections/PostCollection");
 var posts = new PostCollection([{ title: "hello", body: "world", category: "Sports", username: "rob", password: "pw" }, { title: "hola", body: "mundo", category: "Leisure", username: "roberto", password: "pw" }]);
+var LoginForm = require("./components/LoginForm");
 
 React.render(React.createElement(
 	"div",
 	null,
+	React.createElement(LoginForm, null),
 	React.createElement(BlogPostForm, null),
 	React.createElement(PostList, { allPosts: posts }),
 	React.createElement(CommentForm, null),
 	React.createElement(CommentList, { allComments: comments })
 ), document.getElementById("container"));
 
-},{"./collections/CommentCollection":160,"./collections/PostCollection":161,"./components/BlogPostForm":162,"./components/CommentForm":163,"./components/CommentList":164,"./components/PostList":165,"react":159}],167:[function(require,module,exports){
+},{"./collections/CommentCollection":160,"./collections/PostCollection":161,"./components/BlogPostForm":162,"./components/CommentForm":163,"./components/CommentList":164,"./components/LoginForm":165,"./components/PostList":166,"react":159}],168:[function(require,module,exports){
 "use strict";
 
 var $ = require("jquery");
@@ -32796,7 +32855,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"backbone":1,"jquery":4}],168:[function(require,module,exports){
+},{"backbone":1,"jquery":4}],169:[function(require,module,exports){
 "use strict";
 
 var $ = require("jquery");
@@ -32818,7 +32877,35 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"backbone":1,"jquery":4}]},{},[166])
+},{"backbone":1,"jquery":4}],170:[function(require,module,exports){
+"use strict";
+
+var $ = require("jquery");
+var Backbone = require("backbone");
+Backbone.$ = $;
+
+module.exports = Backbone.Model.extend({
+	defaults: {
+		username: "",
+		password: "",
+		email: ""
+	},
+	validate: function validate(attr) {
+		if (!attr.email) {
+			return "Enter an email address";
+		} else if (attr.username !== "rob" && attr.password !== "pw") {
+			return "That username/password combination doesn't exist";
+		} else if (!attr.password) {
+			return "Enter a password";
+		} else if (!attr.username) {
+			return "Enter a username";
+		} else {
+			return false;
+		}
+	}
+});
+
+},{"backbone":1,"jquery":4}]},{},[167])
 
 
 //# sourceMappingURL=all.js.map
