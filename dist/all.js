@@ -32761,7 +32761,7 @@ module.exports = React.createClass({
 		if (!login.isValid()) {
 			console.log(login.validationError);
 		} else {
-			console.log(login);
+			console.log("success");
 		}
 	}
 });

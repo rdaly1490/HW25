@@ -27,7 +27,7 @@ module.exports = React.createClass({
 			console.log(login.validationError);
 		}
 		else {
-			console.log(login);
+			console.log("success");
 		}
 
 	}
