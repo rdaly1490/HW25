@@ -32520,7 +32520,20 @@ module.exports = Backbone.Collection.extend({
 	model: CommentModel
 });
 
-},{"../models/CommentModel.js":166,"backbone":1,"jquery":4}],161:[function(require,module,exports){
+},{"../models/CommentModel.js":168,"backbone":1,"jquery":4}],161:[function(require,module,exports){
+"use strict";
+
+var $ = require("jquery");
+var Backbone = require("backbone");
+Backbone.$ = $;
+
+var BlogPostModel = require("../models/BlogPostModel.js");
+
+module.exports = Backbone.Collection.extend({
+	model: BlogPostModel
+});
+
+},{"../models/BlogPostModel.js":167,"backbone":1,"jquery":4}],162:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32626,7 +32639,7 @@ module.exports = React.createClass({
 
 });
 
-},{"../models/BlogPostModel":165,"react":159}],162:[function(require,module,exports){
+},{"../models/BlogPostModel":167,"react":159}],163:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32668,13 +32681,12 @@ module.exports = React.createClass({
 
 });
 
-},{"../models/CommentModel":166,"react":159}],163:[function(require,module,exports){
+},{"../models/CommentModel":168,"react":159}],164:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
 var CommentModel = require("../models/CommentModel");
 var CommentCollection = require("../collections/CommentCollection");
-var CommentBoard = new CommentCollection();
 
 module.exports = React.createClass({
 	displayName: "exports",
@@ -32697,7 +32709,42 @@ module.exports = React.createClass({
 
 });
 
-},{"../collections/CommentCollection":160,"../models/CommentModel":166,"react":159}],164:[function(require,module,exports){
+},{"../collections/CommentCollection":160,"../models/CommentModel":168,"react":159}],165:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var BlogPostModel = require("../models/BlogPostModel");
+var PostCollection = require("../collections/PostCollection");
+
+module.exports = React.createClass({
+	displayName: "exports",
+
+	render: function render() {
+
+		var postElements = this.props.allPosts.map(function (postModel) {
+			return React.createElement(
+				"div",
+				{ key: postModel.cid },
+				postModel.get("title"),
+				" ",
+				postModel.get("body"),
+				postModel.get("category"),
+				" ",
+				postModel.get("username"),
+				" ",
+				postModel.get("password")
+			);
+		});
+		return React.createElement(
+			"div",
+			null,
+			postElements
+		);
+	}
+
+});
+
+},{"../collections/PostCollection":161,"../models/BlogPostModel":167,"react":159}],166:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -32706,16 +32753,20 @@ var CommentList = require("./components/CommentList");
 var CommentCollection = require("./collections/CommentCollection");
 var comments = new CommentCollection([{ text: "orange", createdAt: new Date() }, { text: "green", createdAt: new Date() }]);
 var BlogPostForm = require("./components/BlogPostForm");
+var PostList = require("./components/PostList");
+var PostCollection = require("./collections/PostCollection");
+var posts = new PostCollection([{ title: "hello", body: "world", category: "Sports", username: "rob", password: "pw" }, { title: "hola", body: "mundo", category: "Leisure", username: "roberto", password: "pw" }]);
 
 React.render(React.createElement(
 	"div",
 	null,
 	React.createElement(BlogPostForm, null),
+	React.createElement(PostList, { allPosts: posts }),
 	React.createElement(CommentForm, null),
 	React.createElement(CommentList, { allComments: comments })
 ), document.getElementById("container"));
 
-},{"./collections/CommentCollection":160,"./components/BlogPostForm":161,"./components/CommentForm":162,"./components/CommentList":163,"react":159}],165:[function(require,module,exports){
+},{"./collections/CommentCollection":160,"./collections/PostCollection":161,"./components/BlogPostForm":162,"./components/CommentForm":163,"./components/CommentList":164,"./components/PostList":165,"react":159}],167:[function(require,module,exports){
 "use strict";
 
 var $ = require("jquery");
@@ -32745,7 +32796,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"backbone":1,"jquery":4}],166:[function(require,module,exports){
+},{"backbone":1,"jquery":4}],168:[function(require,module,exports){
 "use strict";
 
 var $ = require("jquery");
@@ -32767,7 +32818,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"backbone":1,"jquery":4}]},{},[164])
+},{"backbone":1,"jquery":4}]},{},[166])
 
 
 //# sourceMappingURL=all.js.map

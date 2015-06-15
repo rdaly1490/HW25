@@ -1,7 +1,6 @@
 var React = require("react");
 var CommentModel = require("../models/CommentModel");
 var CommentCollection = require("../collections/CommentCollection");
-var CommentBoard = new CommentCollection();
 
 module.exports = React.createClass({
 	render: function() {
